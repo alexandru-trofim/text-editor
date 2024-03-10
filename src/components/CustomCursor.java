@@ -27,7 +27,21 @@ public class CustomCursor {
         // line in matrix =
     }
 
-    public void moveCursor(JPanel panel, CursorDirection dir) {
+    private int getLastCharPos(TextAreaPanel panel) {
+        int count = j;
+        while(panel.textEngine.text[i][count] != '\0') {
+            count++;
+        }
+        return count;
+    }
+    public void moveCursor(TextAreaPanel panel, CursorDirection dir, boolean editingText) {
+        int currRowLength = panel.textEngine.text[i].length;
+
+        if (!editingText && j == 0 && dir == CursorDirection.LEFT)
+            return;
+        if (!editingText && j == getLastCharPos(panel) && dir == CursorDirection.RIGHT)
+            return;
+
         panel.repaint(x, y, cursorWidth + 1, cursorHeight + 1);
         //Changes the coordinates of the square
         if (dir == CursorDirection.RIGHT) {

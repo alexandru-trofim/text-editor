@@ -23,9 +23,11 @@ public class TextEditorListener extends KeyAdapter {
         if (Character.isLetterOrDigit(keyCode) || keyCode == ' ') {
             panel.textEngine.printChar(character);
         } else if (keyCode == KeyEvent.VK_RIGHT) {
-            cursor.moveCursor(panel, components.CursorDirection.RIGHT);
+            cursor.moveCursor(panel, components.CursorDirection.RIGHT, false);
         } else if (keyCode == KeyEvent.VK_LEFT) {
-            cursor.moveCursor(panel, components.CursorDirection.LEFT);
+            cursor.moveCursor(panel, components.CursorDirection.LEFT, false);
+        } else if (keyCode == KeyEvent.VK_BACK_SPACE) {
+            panel.textEngine.deleteCharacter();
         }
     }
 
