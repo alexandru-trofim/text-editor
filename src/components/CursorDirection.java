@@ -4,5 +4,6 @@ public enum CursorDirection {
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN,
+    NEW_LINE
 }

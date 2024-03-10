@@ -16,8 +16,7 @@ public class TextAreaPanel extends JPanel {
     private Font currentFont;
     private CustomCursor cursor;
     private Timer cursorBlinkTimer;
-    public TextEngine textEngine;
-    public Graphics graphics;
+    private TextEngine textEngine;
 
     public CustomCursor getCustomCursor() {
         return cursor;
@@ -39,6 +38,9 @@ public class TextAreaPanel extends JPanel {
         addKeyListener(new TextEditorListener(this));
     }
 
+    public TextEngine getTextEngine() {
+        return textEngine;
+    }
 
     private void setCustomFont() {
         try {
@@ -62,7 +64,6 @@ public class TextAreaPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        graphics = g;
         super.paintComponent(g);
         textEngine.paintText(g);
         cursor.paintCursor(g);

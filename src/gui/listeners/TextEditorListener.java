@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
+import components.CursorDirection;
 import components.CustomCursor;
 import components.TextAreaPanel;
 
@@ -21,13 +23,15 @@ public class TextEditorListener extends KeyAdapter {
         int keyCode = keyEvent.getKeyCode();
         char character = keyEvent.getKeyChar();
         if (Character.isLetterOrDigit(keyCode) || keyCode == ' ') {
-            panel.textEngine.printChar(character);
+            panel.getTextEngine().printChar(character);
         } else if (keyCode == KeyEvent.VK_RIGHT) {
             cursor.moveCursor(panel, components.CursorDirection.RIGHT, false);
         } else if (keyCode == KeyEvent.VK_LEFT) {
             cursor.moveCursor(panel, components.CursorDirection.LEFT, false);
         } else if (keyCode == KeyEvent.VK_BACK_SPACE) {
-            panel.textEngine.deleteCharacter();
+            panel.getTextEngine().deleteCharacter();
+        } else if (keyCode == KeyEvent.VK_ENTER) {
+            cursor.moveCursor(panel, CursorDirection.NEW_LINE, false);
         }
     }
 

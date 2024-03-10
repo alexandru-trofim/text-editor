@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class TextEngine {
-    Queue<CharPrintInfo> characterQueue;
-
-    public char[][] text;
+    private char[][] text;
     private TextAreaPanel panel;
     private CustomCursor cursor;
 
@@ -23,22 +21,22 @@ public class TextEngine {
 
         this.panel = panel;
         this.cursor = panel.getCustomCursor();
-        characterQueue = new ArrayDeque<>();
+    }
 
+    public char[][] getText() {
+        return text;
     }
 
     public void printChar(char c) {
 //        text[cursor.i][cursor.j] = c;
-        insertCharToArray(text, c, cursor.j);
+        insertCharToArray(text, c, cursor.getJ());
         cursor.moveCursor(panel, CursorDirection.RIGHT, true);
-        panel.repaint(cursor.x, cursor.y, (text[cursor.i].length - cursor.j) * EditorConfig.CURSOR_WIDTH, EditorConfig.CURSOR_HEIGHT + 1);
+        panel.repaint(cursor.getX(), cursor.getY(), (text[cursor.getI()].length - cursor.getJ()) * EditorConfig.CURSOR_WIDTH, EditorConfig.CURSOR_HEIGHT + 1);
     }
 
     private void removeCharFromArray(char[] arr, int index) {
 //        System.out.println(arr.length);
         for (int i = index; i < arr.length - 1; ++i) {
-            System.out.println(i + " " + arr[i] + " " + arr[i + 1]);
-
             arr[i] = arr[i + 1];
         }
     }
@@ -53,13 +51,12 @@ public class TextEngine {
     private void insertCharToArray(char[][] text, char character, int index) {
         //If we are at max capacity double the arraySize
         //for now do simple insert
-        if (text[cursor.i][text[cursor.i].length - 1] != '\0') {
+        if (text[cursor.getI()][text[cursor.getI()].length - 1] != '\0') {
             //double the array size
-            text[cursor.i] = doubleArraySize(text[cursor.i]);
-            System.out.println(text[cursor.i]);
+            text[cursor.getI()] = doubleArraySize(text[cursor.getI()]);
         }
 
-        char[] line = text[cursor.i];
+        char[] line = text[cursor.getI()];
 
         for (int i = line.length - 1; i > index; --i) {
             line[i] = line[i - 1];
@@ -68,18 +65,12 @@ public class TextEngine {
 
     }
     public void deleteCharacter() {
-        if (cursor.j == 0) return;
-        removeCharFromArray(text[cursor.i], cursor.j - 1);
+        if (cursor.getJ() == 0) return;
+        removeCharFromArray(text[cursor.getI()], cursor.getJ() - 1);
         cursor.moveCursor(panel, CursorDirection.LEFT, true);
         // Repaint all the characters on the right that were shifted
-        panel.repaint(cursor.x, cursor.y, (text[cursor.i].length - cursor.j) * EditorConfig.CURSOR_WIDTH,
+        panel.repaint(cursor.getX(), cursor.getY(), (text[cursor.getI()].length - cursor.getJ()) * EditorConfig.CURSOR_WIDTH,
                                                                                 EditorConfig.CURSOR_HEIGHT + 1);
-        System.out.println(text[cursor.i]);
-
-    }
-
-    public void insertCharacter() {
-
     }
 
     public void paintText(Graphics g) {
@@ -88,7 +79,7 @@ public class TextEngine {
             if (line[0] == '\0') {
                 break;
             }
-            g.drawChars(line, 0, line.length, EditorConfig.PADDING_LEFT, EditorConfig.PADDING_UP + 13);
+            g.drawChars(line, 0, line.length, EditorConfig.PADDING_LEFT, (EditorConfig.PADDING_UP + 13) * (i + 1));
         }
     }
 
