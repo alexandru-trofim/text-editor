@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class CustomCursor {
     private int x;
@@ -57,37 +58,64 @@ public class CustomCursor {
         this.color = new Color(0, 0, 0, alpha);
     }
 
-    private int getLastCharPos(TextAreaPanel panel) {
+    private int getLastCharPos(TextAreaPanel panel, int line) {
         int count = j;
         char[][] text = panel.getTextEngine().getText();
-        while(text[i][count] != '\0') {
+        while(text[line][count] != '\0') {
             count++;
         }
         return count;
     }
+    private int getNewLineColumnPos(TextAreaPanel panel, int currLine, int newLine) {
+        int currLinePos = j;
+        int newLinePos = 0;
+        char[][] text = panel.getTextEngine().getText();
+
+        while(text[newLine][newLinePos] != '\0') {
+            newLinePos++;
+        }
+        System.out.println("currLinePos: " + currLinePos + " newLinePos:" + newLinePos);
+
+        // We put here - in front of the return because we want to go to the left
+        if (newLinePos >= currLinePos) return 0;
+        else return -(currLinePos - newLinePos);
+    }
     public void moveCursor(TextAreaPanel panel, CursorDirection dir, boolean editingText) {
         if (!editingText && j == 0 && dir == CursorDirection.LEFT)
             return;
-        if (!editingText && j == getLastCharPos(panel) && dir == CursorDirection.RIGHT)
+        if (!editingText && j == getLastCharPos(panel, i) && dir == CursorDirection.RIGHT)
             return;
 
         panel.repaint(x, y, cursorWidth + 1, cursorHeight + 1);
         //Changes the coordinates of the square
         if (dir == CursorDirection.RIGHT) {
-            x += 10;
+            x += EditorConfig.CURSOR_WIDTH;
             j += 1;
         } else if (dir == CursorDirection.LEFT) {
-            x -= 10;
+            x -= EditorConfig.CURSOR_WIDTH;
             j -= 1;
         } else if (dir == CursorDirection.NEW_LINE) {
             j = 0;
             i += 1;
+            panel.getTextEngine().getText()[i][j] = KeyEvent.VK_NUM_LOCK;
+            // here we don't want to add padding, also where painting the text
             y += EditorConfig.PADDING_UP + 13;
             x = EditorConfig.PADDING_LEFT;
+        } else if (dir == CursorDirection.DOWN) {
+            int offset = getNewLineColumnPos(panel, i, i + 1);
+            y += EditorConfig.PADDING_UP + 13;
+            x += offset * EditorConfig.CURSOR_WIDTH;
+            i += 1;
+            j += offset;
+        } else if (dir == CursorDirection.UP)  {
+            int offset = getNewLineColumnPos(panel, i, i - 1);
+            y -= EditorConfig.PADDING_UP + 13;
+            x += offset * EditorConfig.CURSOR_WIDTH;
+            i -= 1;
+            j += offset;
         }
         //Now paints just the part of the Panel where the square now is
         panel.repaint(x, y, cursorWidth + 1, cursorHeight + 1);
-
     }
     public void paintCursor(Graphics g) {
         Color previousColor = g.getColor();

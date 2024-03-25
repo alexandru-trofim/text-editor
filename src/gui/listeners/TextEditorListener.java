@@ -25,13 +25,17 @@ public class TextEditorListener extends KeyAdapter {
         if (Character.isLetterOrDigit(keyCode) || keyCode == ' ') {
             panel.getTextEngine().printChar(character);
         } else if (keyCode == KeyEvent.VK_RIGHT) {
-            cursor.moveCursor(panel, components.CursorDirection.RIGHT, false);
+            cursor.moveCursor(panel, CursorDirection.RIGHT, false);
         } else if (keyCode == KeyEvent.VK_LEFT) {
-            cursor.moveCursor(panel, components.CursorDirection.LEFT, false);
+            cursor.moveCursor(panel, CursorDirection.LEFT, false);
         } else if (keyCode == KeyEvent.VK_BACK_SPACE) {
             panel.getTextEngine().deleteCharacter();
         } else if (keyCode == KeyEvent.VK_ENTER) {
             cursor.moveCursor(panel, CursorDirection.NEW_LINE, false);
+        } else if (keyCode == KeyEvent.VK_UP) {
+            cursor.moveCursor(panel, CursorDirection.UP, false);
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            cursor.moveCursor(panel, CursorDirection.DOWN, false);
         }
     }
 
