@@ -14,8 +14,8 @@ public class CustomCursor {
     private Color color;
     private int alpha = 255;
     private int increment = EditorConfig.CURSOR_BLINK_STEP;
-    private int cursorWidth = EditorConfig.CURSOR_WIDTH; // Example: cursor width
-    private int  cursorHeight = EditorConfig.CURSOR_HEIGHT; // Example: cursor height
+    private final int cursorWidth = EditorConfig.CURSOR_WIDTH; // Example: cursor width
+    private final int  cursorHeight = EditorConfig.CURSOR_HEIGHT; // Example: cursor height
 
     public int getX() {
         return x;
@@ -97,8 +97,12 @@ public class CustomCursor {
         } else if (dir == CursorDirection.NEW_LINE) {
             j = 0;
             i += 1;
+            //TODO: Here when we go to the new line we put and invisible character
+            // what we should do is count the number of used lines and paint
+            // that amount of lines
             panel.getTextEngine().getText()[i][j] = KeyEvent.VK_NUM_LOCK;
             // here we don't want to add padding, also where painting the text
+            //TODO: Here is another problem
             y += EditorConfig.PADDING_UP + 13;
             x = EditorConfig.PADDING_LEFT;
         } else if (dir == CursorDirection.DOWN) {
