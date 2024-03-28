@@ -11,9 +11,12 @@ public class TextEngine {
     private TextAreaPanel panel;
     private CustomCursor cursor;
 
+    private int nrOfLines;
+
     public TextEngine(TextAreaPanel panel) {
         //Prealloc the space for the text
         text = new char[100][100];
+        nrOfLines = 1;
 
         for (char[] line : text) {
             Arrays.fill(line, '\0');
@@ -26,21 +29,29 @@ public class TextEngine {
     public char[][] getText() {
         return text;
     }
+    public int getNrOfLines() {
+        return nrOfLines;
+    }
+
+    public void incNrOfLines() {
+        nrOfLines++;
+    }
+
+    public void decNrOfLines() {
+        nrOfLines--;
+    }
 
     public void printChar(char c) {
-//        text[cursor.i][cursor.j] = c;
         insertCharToArray(text, c, cursor.getJ());
         cursor.moveCursor(panel, CursorDirection.RIGHT, true);
-        panel.repaint(cursor.getX(), cursor.getY(), (text[cursor.getI()].length - cursor.getJ()) * EditorConfig.CURSOR_WIDTH, EditorConfig.CURSOR_HEIGHT + 1);
     }
 
     private void removeCharFromArray(char[] arr, int index) {
-//        System.out.println(arr.length);
         for (int i = index; i < arr.length - 1; ++i) {
             arr[i] = arr[i + 1];
         }
     }
-    // Method to double the size of a char[] array
+
     private char[] doubleArraySize(char[] arr) {
         char[] newArray = new char[arr.length * 2];
         System.arraycopy(arr, 0, newArray, 0, arr.length);
@@ -55,7 +66,6 @@ public class TextEngine {
             //double the array size
             text[cursor.getI()] = doubleArraySize(text[cursor.getI()]);
         }
-
         char[] line = text[cursor.getI()];
 
         for (int i = line.length - 1; i > index; --i) {
@@ -68,18 +78,25 @@ public class TextEngine {
         if (cursor.getJ() == 0) return;
         removeCharFromArray(text[cursor.getI()], cursor.getJ() - 1);
         cursor.moveCursor(panel, CursorDirection.LEFT, true);
-        // Repaint all the characters on the right that were shifted
-        panel.repaint(cursor.getX(), cursor.getY(), (text[cursor.getI()].length - cursor.getJ()) * EditorConfig.CURSOR_WIDTH,
-                                                                                EditorConfig.CURSOR_HEIGHT + 1);
     }
 
+    private int getYLinePos(int line) {
+        int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;
+        int textCursorDisplacement = EditorConfig.CURSOR_HEIGHT - EditorConfig.CURSOR_DISPLACEMENT;
+        return EditorConfig.PADDING_UP + currLinePadding + textCursorDisplacement;
+    }
+    //TODO: Here we should pring the "NrOfLines" lines
     public void paintText(Graphics g) {
-        for (int i = 0; i < text.length; ++i) {
+        for (int i = 0; i < nrOfLines; ++i) {
             char[] line = text[i];
             if (line[0] == '\0') {
-                break;
+                continue;
             }
-            g.drawChars(line, 0, line.length, EditorConfig.PADDING_LEFT, (EditorConfig.PADDING_UP + 13) * (i + 1));
+
+            int yLinePos = getYLinePos(i);
+            g.drawChars(line, 0, line.length, EditorConfig.PADDING_LEFT, yLinePos);
+            panel.repaint(EditorConfig.PADDING_LEFT, yLinePos, line.length * EditorConfig.CURSOR_WIDTH,
+                                                                                        EditorConfig.CURSOR_HEIGHT);
         }
     }
 

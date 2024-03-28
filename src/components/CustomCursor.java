@@ -66,6 +66,15 @@ public class CustomCursor {
         }
         return count;
     }
+
+    /**
+     * Finds on what character position on the line should we move
+     * When going from a line to another
+     * @param panel Current panel we're editing text
+     * @param currLine The current line index
+     * @param newLine The new line index
+     * @return Returns the column position on the new line
+     */
     private int getNewLineColumnPos(TextAreaPanel panel, int currLine, int newLine) {
         int currLinePos = j;
         int newLinePos = 0;
@@ -74,7 +83,6 @@ public class CustomCursor {
         while(text[newLine][newLinePos] != '\0') {
             newLinePos++;
         }
-        System.out.println("currLinePos: " + currLinePos + " newLinePos:" + newLinePos);
 
         // We put here - in front of the return because we want to go to the left
         if (newLinePos >= currLinePos) return 0;
@@ -97,23 +105,19 @@ public class CustomCursor {
         } else if (dir == CursorDirection.NEW_LINE) {
             j = 0;
             i += 1;
-            //TODO: Here when we go to the new line we put and invisible character
-            // what we should do is count the number of used lines and paint
-            // that amount of lines
-            panel.getTextEngine().getText()[i][j] = KeyEvent.VK_NUM_LOCK;
-            // here we don't want to add padding, also where painting the text
-            //TODO: Here is another problem
-            y += EditorConfig.PADDING_UP + 13;
+            y += EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x = EditorConfig.PADDING_LEFT;
+
+            panel.getTextEngine().incNrOfLines();
         } else if (dir == CursorDirection.DOWN) {
             int offset = getNewLineColumnPos(panel, i, i + 1);
-            y += EditorConfig.PADDING_UP + 13;
+            y += EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x += offset * EditorConfig.CURSOR_WIDTH;
             i += 1;
             j += offset;
         } else if (dir == CursorDirection.UP)  {
             int offset = getNewLineColumnPos(panel, i, i - 1);
-            y -= EditorConfig.PADDING_UP + 13;
+            y -= EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x += offset * EditorConfig.CURSOR_WIDTH;
             i -= 1;
             j += offset;
@@ -129,7 +133,7 @@ public class CustomCursor {
     }
     public Timer enableCursorBlinking(TextAreaPanel panel) {
         CustomCursor cursor = panel.getCustomCursor();
-        Timer cursorBlinkTimer = new Timer(60, new ActionListener() {
+        return new Timer(80, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cursor.alpha += cursor.increment;
@@ -147,10 +151,7 @@ public class CustomCursor {
                 panel.repaint(cursor.x, cursor.y, cursor.cursorWidth, cursor.cursorHeight);
             }
         });
-        return cursorBlinkTimer;
     }
-
-
 }
 
 

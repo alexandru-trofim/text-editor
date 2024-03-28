@@ -22,8 +22,6 @@ public class TextAreaPanel extends JPanel {
         return cursor;
     }
     public TextAreaPanel() {
-        // pos - cursorHeight
-        //We don't need the coordinates for now
         cursor = new CustomCursor(0, 0);
         textEngine = new TextEngine(this);
         cursorBlinkTimer = cursor.enableCursorBlinking(this);
@@ -46,9 +44,11 @@ public class TextAreaPanel extends JPanel {
         try {
             InputStream stream = getClass()
                     .getResourceAsStream("/resources/SpaceMono-Regular.ttf");
+
             currentFont = Font.createFont(Font.TRUETYPE_FONT,
-                    Objects.requireNonNull(stream)).deriveFont(16f);
+                    Objects.requireNonNull(stream)).deriveFont(EditorConfig.FONT_SIZE);
             setFont(currentFont);
+
         } catch (IOException | FontFormatException | NullPointerException e ) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading font: " + e.getMessage(),
