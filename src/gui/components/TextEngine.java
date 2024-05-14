@@ -1,10 +1,7 @@
-package components;
+package gui.components;
 
 import java.awt.*;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
 
 public class TextEngine {
     private char[][] text;

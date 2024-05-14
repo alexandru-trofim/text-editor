@@ -1,15 +1,12 @@
-package components;
+package gui.components;
 
 import gui.listeners.TextEditorListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayDeque;
 import java.util.Objects;
-import java.util.Queue;
 
 public class TextAreaPanel extends JPanel {
 

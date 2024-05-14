@@ -1,10 +1,10 @@
-package components;
+package gui.components;
 
 public class EditorConfig {
     public static int PADDING_LEFT = 20;
     public static int PADDING_RIGHT = 20;
     public static int PADDING_UP = 20;
-    public static int LINE_SPACING = 20;
+    public static int LINE_SPACING = 25;
     public static float FONT_SIZE = 16.0f;
     public static int PADDING_BOTTOM = 20;
     public static int CURSOR_BLINK_STEP = 40;

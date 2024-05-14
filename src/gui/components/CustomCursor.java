@@ -1,10 +1,9 @@
-package components;
+package gui.components;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 public class CustomCursor {
     private int x;
@@ -110,12 +109,16 @@ public class CustomCursor {
 
             panel.getTextEngine().incNrOfLines();
         } else if (dir == CursorDirection.DOWN) {
+            if (panel.getTextEngine().getNrOfLines() - 1 == i) return;
+
             int offset = getNewLineColumnPos(panel, i, i + 1);
             y += EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x += offset * EditorConfig.CURSOR_WIDTH;
             i += 1;
             j += offset;
         } else if (dir == CursorDirection.UP)  {
+            if (i == 0) return;
+
             int offset = getNewLineColumnPos(panel, i, i - 1);
             y -= EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x += offset * EditorConfig.CURSOR_WIDTH;

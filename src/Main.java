@@ -1,11 +1,9 @@
-package components;
-
+import gui.components.TextAreaPanel;
 import gui.listeners.SaveButtonListener;
-import org.w3c.dom.Text;
 
 import javax.swing.*;
 
-public class TextEditor {
+public class Main {
 
     private static void createAndShowGui() {
         System.out.println("Created gui on EDT? " + SwingUtilities.isEventDispatchThread());
@@ -25,7 +23,7 @@ public class TextEditor {
         openItem = new JMenuItem("Open");
         saveItem = new JMenuItem("Save");
 
-        saveItem.addActionListener(new SaveButtonListener());
+        saveItem.addActionListener(new SaveButtonListener(panel));
 
         // Adding menu items to menu
         fileMenu.add(saveItem);
@@ -36,13 +34,13 @@ public class TextEditor {
 
         // setting menubar at top of the window.
 
-        // if you create a object of JFrame in class then code to set JMenuBar to JFrame will be:
+        // if you create an object of JFrame in class then code to set JMenuBar to JFrame will be:
         // jframe.setJMenuBar(menuBar);
         // if class is extending JFrame then it will be like this:
         f.setJMenuBar(menuBar);
 
     }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TextEditor::createAndShowGui);
+        SwingUtilities.invokeLater(Main::createAndShowGui);
     }
 }

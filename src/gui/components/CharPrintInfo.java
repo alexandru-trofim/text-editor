@@ -1,4 +1,4 @@
-package components;
+package gui.components;
 
 public class CharPrintInfo {
     public int i;
