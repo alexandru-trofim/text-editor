@@ -1,10 +1,14 @@
 package org.gui.components;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+//import java.util.List;
 
 public class TextEngine {
-    private char[][] text;
+//    private char[][] text;
+    private List<char[]> text;
     private TextAreaPanel panel;
     private CustomCursor cursor;
 
@@ -12,8 +16,12 @@ public class TextEngine {
 
     public TextEngine(TextAreaPanel panel) {
         //Prealloc the space for the text
-        text = new char[100][100];
+//        text = new char[100][100];
+        text = new ArrayList<>();
         nrOfLines = 1;
+
+        // Adding the first line
+        text.add(new char[100]);
 
         for (char[] line : text) {
             Arrays.fill(line, '\0');
@@ -23,7 +31,7 @@ public class TextEngine {
         this.cursor = panel.getCustomCursor();
     }
 
-    public char[][] getText() {
+    public List<char[]> getText() {
         return text;
     }
     public int getNrOfLines() {
@@ -56,24 +64,25 @@ public class TextEngine {
         return newArray;
     }
 
-    private void insertCharToArray(char[][] text, char character, int index) {
-        //If we are at max capacity double the arraySize
-        //for now do simple insert
-        if (text[cursor.getI()][text[cursor.getI()].length - 1] != '\0') {
-            //double the array size
-            text[cursor.getI()] = doubleArraySize(text[cursor.getI()]);
-        }
-        char[] line = text[cursor.getI()];
+    private void insertCharToArray(List<char[]> text, char character, int index) {
+        char[] currLine = text.get(cursor.getI());
+        int lastChar = currLine.length - 1;
 
-        for (int i = line.length - 1; i > index; --i) {
-            line[i] = line[i - 1];
+        if (currLine[lastChar] != '\0') {
+            //double the array size
+            text.set(cursor.getI(), doubleArraySize(currLine));
+            currLine = text.get(cursor.getI());
         }
-        line[index] = character;
+
+        for (int i = currLine.length - 1; i > index; --i) {
+            currLine[i] = currLine[i - 1];
+        }
+        currLine[index] = character;
 
     }
     public void deleteCharacter() {
         if (cursor.getJ() == 0) return;
-        removeCharFromArray(text[cursor.getI()], cursor.getJ() - 1);
+        removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
         cursor.moveCursor(panel, CursorDirection.LEFT, true);
     }
 
@@ -82,10 +91,19 @@ public class TextEngine {
         int textCursorDisplacement = EditorConfig.CURSOR_HEIGHT - EditorConfig.CURSOR_DISPLACEMENT;
         return EditorConfig.PADDING_UP + currLinePadding + textCursorDisplacement;
     }
-    //TODO: Here we should pring the "NrOfLines" lines
+
+    public void breakLine(int column, int lineIndex) {
+       //We have to split the text on the given line before and after
+        char[] currLine = text.get(lineIndex);
+        char[] secondPart = Arrays.copyOfRange(currLine, column, currLine.length);
+        Arrays.fill(currLine, column, currLine.length, '\0');
+        System.out.println(secondPart);
+        text.add(lineIndex + 1, secondPart);
+    }
+
     public void paintText(Graphics g) {
-        for (int i = 0; i < nrOfLines; ++i) {
-            char[] line = text[i];
+        for (int i = 0; i < text.size(); ++i) {
+            char[] line = text.get(i);
             if (line[0] == '\0') {
                 continue;
             }

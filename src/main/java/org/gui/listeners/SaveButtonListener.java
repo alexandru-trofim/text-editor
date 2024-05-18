@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 
 public class SaveButtonListener implements ActionListener {
 
@@ -17,40 +17,38 @@ public class SaveButtonListener implements ActionListener {
     }
 
 
-    private void saveToFileV2(String filePath) {
-
-        char[][] text = panel.getTextEngine().getText();
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            //This one has a flaw when having multiple blank lines within the file
-            Arrays.stream(text)
-                    .map(row -> new String(row).replace("\0", "").toCharArray()) // Remove '\0'
-                    .map(String::new) // Convert char[] to String
-                    .takeWhile((line) -> !line.isEmpty())
-                    .forEach(line -> {
-                        try {
-                            writer.write(line);
-                            writer.newLine(); // Add newline after each row
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void saveToFileV2(String filePath) {
+//
+//        List<char[]> text = panel.getTextEngine().getText();
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+//            //This one has a flaw when having multiple blank lines within the file
+//            Arrays.stream(text)
+//                    .map(row -> new String(row).replace("\0", "").toCharArray()) // Remove '\0'
+//                    .map(String::new) // Convert char[] to String
+//                    .takeWhile((line) -> !line.isEmpty())
+//                    .forEach(line -> {
+//                        try {
+//                            writer.write(line);
+//                            writer.newLine(); // Add newline after each row
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     public void saveToFile(String filePath) {
-        char[][] text = panel.getTextEngine().getText();
+        List<char[]> text = panel.getTextEngine().getText();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-//            for (char[] row : text) {
-            for (int i = 0; i < panel.getTextEngine().getNrOfLines(); ++i) {
-                char[] row = text[i];
+            for (char[] row : text) {
                 if (row[0] == '\0') {
                     writer.newLine();
                     continue;
                 }
                 for (char c : row) {
                     if (c == '\0') {
-                        System.out.println("found backslash 0");
+                        //Break when finding the \0 character
                         break;
                     }
                     writer.write(c);

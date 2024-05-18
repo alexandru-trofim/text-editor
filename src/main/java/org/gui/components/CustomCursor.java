@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class CustomCursor {
     private int x;
@@ -57,10 +58,11 @@ public class CustomCursor {
         this.color = new Color(0, 0, 0, alpha);
     }
 
-    private int getLastCharPos(TextAreaPanel panel, int line) {
+    //TODO: This one shold be in the text engine
+    private int getLastCharPos(TextAreaPanel panel, int lineIndex) {
         int count = j;
-        char[][] text = panel.getTextEngine().getText();
-        while(text[line][count] != '\0') {
+        List<char[]> text = panel.getTextEngine().getText();
+        while(text.get(lineIndex)[count] != '\0') {
             count++;
         }
         return count;
@@ -77,9 +79,9 @@ public class CustomCursor {
     private int getNewLineColumnPos(TextAreaPanel panel, int currLine, int newLine) {
         int currLinePos = j;
         int newLinePos = 0;
-        char[][] text = panel.getTextEngine().getText();
+        List<char[]> text = panel.getTextEngine().getText();
 
-        while(text[newLine][newLinePos] != '\0') {
+        while(text.get(newLine)[newLinePos] != '\0') {
             newLinePos++;
         }
 
@@ -102,11 +104,20 @@ public class CustomCursor {
             x -= EditorConfig.CURSOR_WIDTH;
             j -= 1;
         } else if (dir == CursorDirection.NEW_LINE) {
+            System.out.println("Current j = " + j + "; i = " + i);
+            panel.getTextEngine().breakLine(j, i);
             j = 0;
             i += 1;
+            //TODO: Here we should create a formula for the cursor position based
+            // on the current (i, j) coordinates
             y += EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING;
             x = EditorConfig.PADDING_LEFT;
-
+            // Here we have to split our current line by the position we're at
+            // Then move all the lines a line below\
+            // Then put the rest of the current line on the next line
+            // So when we're pressing enter, we have the current j
+            // we shold take all the text from the j to the end of the line
+//            breakLine(int column, int line)
             panel.getTextEngine().incNrOfLines();
         } else if (dir == CursorDirection.DOWN) {
             if (panel.getTextEngine().getNrOfLines() - 1 == i) return;

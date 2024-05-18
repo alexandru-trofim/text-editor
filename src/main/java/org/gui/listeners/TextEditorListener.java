@@ -1,11 +1,11 @@
 package org.gui.listeners;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 import org.gui.components.CursorDirection;
 import org.gui.components.CustomCursor;
 import org.gui.components.TextAreaPanel;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TextEditorListener extends KeyAdapter {
 

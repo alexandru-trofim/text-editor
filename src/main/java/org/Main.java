@@ -1,14 +1,18 @@
 package org;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import org.gui.components.TextAreaPanel;
 import org.gui.listeners.SaveButtonListener;
-
 import javax.swing.*;
 
 public class Main {
 
     private static void createAndShowGui() {
         System.out.println("Created gui on EDT? " + SwingUtilities.isEventDispatchThread());
+        FlatDarculaLaf.setup();
         JFrame f = new JFrame("Swing paint demo");
         TextAreaPanel panel = new TextAreaPanel();
         JMenuBar menuBar = new JMenuBar();
