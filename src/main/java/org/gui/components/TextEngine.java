@@ -1,5 +1,7 @@
 package org.gui.components;
 
+import org.gui.components.cursor.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,20 +14,13 @@ public class TextEngine {
     private TextAreaPanel panel;
     private CustomCursor cursor;
 
-    private int nrOfLines;
 
     public TextEngine(TextAreaPanel panel) {
-        //Prealloc the space for the text
-//        text = new char[100][100];
         text = new ArrayList<>();
-        nrOfLines = 1;
 
         // Adding the first line
         text.add(new char[100]);
-
-        for (char[] line : text) {
-            Arrays.fill(line, '\0');
-        }
+        Arrays.fill(text.getFirst(), '\0');
 
         this.panel = panel;
         this.cursor = panel.getCustomCursor();
@@ -34,21 +29,23 @@ public class TextEngine {
     public List<char[]> getText() {
         return text;
     }
-    public int getNrOfLines() {
-        return nrOfLines;
-    }
 
-    public void incNrOfLines() {
-        nrOfLines++;
-    }
+    public void moveCursor(CursorCommand command, boolean editingText) {
 
-    public void decNrOfLines() {
-        nrOfLines--;
+        panel.repaint(cursor.getX(),
+                      cursor.getY(),
+                cursor.getCursorWidth() + 1,
+                cursor.getCursorHeight() + 1);
+        command.execute(panel, editingText);
+        panel.repaint(cursor.getX(),
+                cursor.getY(),
+                cursor.getCursorWidth() + 1,
+                cursor.getCursorHeight() + 1);
     }
 
     public void printChar(char c) {
         insertCharToArray(text, c, cursor.getJ());
-        cursor.moveCursor(panel, CursorDirection.RIGHT, true);
+        cursor.moveCursor(panel, new MoveCursorRightCommand(), true);
     }
 
     private void removeCharFromArray(char[] arr, int index) {
@@ -83,7 +80,7 @@ public class TextEngine {
     public void deleteCharacter() {
         if (cursor.getJ() == 0) return;
         removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
-        cursor.moveCursor(panel, CursorDirection.LEFT, true);
+        cursor.moveCursor(panel, new MoveCursorLeftCommand(), true);
     }
 
     private int getYLinePos(int line) {
@@ -97,7 +94,6 @@ public class TextEngine {
         char[] currLine = text.get(lineIndex);
         char[] secondPart = Arrays.copyOfRange(currLine, column, currLine.length);
         Arrays.fill(currLine, column, currLine.length, '\0');
-        System.out.println(secondPart);
         text.add(lineIndex + 1, secondPart);
     }
 

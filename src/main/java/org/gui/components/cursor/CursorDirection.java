@@ -1,4 +1,4 @@
-package org.gui.components;
+package org.gui.components.cursor;
 
 public enum CursorDirection {
     LEFT,

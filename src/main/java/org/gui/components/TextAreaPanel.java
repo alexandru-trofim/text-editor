@@ -1,5 +1,6 @@
 package org.gui.components;
 
+import org.gui.components.cursor.CustomCursor;
 import org.gui.listeners.TextEditorListener;
 
 import javax.swing.*;
@@ -9,7 +10,6 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class TextAreaPanel extends JPanel {
-
     private Font currentFont;
     private CustomCursor cursor;
     private Timer cursorBlinkTimer;
@@ -23,7 +23,6 @@ public class TextAreaPanel extends JPanel {
         textEngine = new TextEngine(this);
         cursorBlinkTimer = cursor.enableCursorBlinking(this);
 
-        setBorder(BorderFactory.createDashedBorder(Color.DARK_GRAY));
         setFocusable(true);
         requestFocusInWindow();
 

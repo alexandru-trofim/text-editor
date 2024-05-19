@@ -5,22 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="694d7513-4b34-4ef7-992c-267f3ef38d43" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/CustomCursor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/CustomCursor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/CursorDirection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/cursor/CursorDirection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/CustomCursor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/cursor/CustomCursor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/TextAreaPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/TextAreaPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/TextEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/TextEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/listeners/SaveButtonListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/listeners/SaveButtonListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/listeners/TextEditorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/listeners/TextEditorListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/CustomCursor$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/CustomCursor.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/TextAreaPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/TextAreaPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/TextEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/TextEngine.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +23,14 @@
   </component>
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -43,6 +45,9 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2gVGiy0Do7Aac77g3Fz5nIrrqDc" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -53,7 +58,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature__enter__breaks__line",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/alexandrutrofim/Documents/development/Swing-app/text-editor-app",
     "node.js.detected.package.eslint": "true",
@@ -124,7 +129,7 @@
       <workItem from="1715805710497" duration="1702000" />
       <workItem from="1715876611718" duration="1833000" />
       <workItem from="1716017045853" duration="12000" />
-      <workItem from="1716033426738" duration="6345000" />
+      <workItem from="1716033426738" duration="18362000" />
     </task>
     <servers />
   </component>
