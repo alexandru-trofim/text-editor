@@ -1,6 +1,5 @@
 package org.gui.components.cursor;
 
-import org.gui.components.EditorConfig;
 import org.gui.components.TextAreaPanel;
 
 public class CursorNewLineCommand implements CursorCommand {
@@ -16,8 +15,9 @@ public class CursorNewLineCommand implements CursorCommand {
         // on the current (i, j) coordinates something like updateCursorPosOnScreen
 
         //Move the cursor on screen
-        cursor.setY(cursor.getY() + EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING);
-        cursor.setX(EditorConfig.PADDING_LEFT);
+//        cursor.setY(cursor.getY() + EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING);
+//        cursor.setX(EditorConfig.PADDING_LEFT);
+        cursor.updateCursorPhysicalPos();
 
     }
 }

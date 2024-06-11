@@ -45,7 +45,7 @@ public class TextEngine {
 
     public void printChar(char c) {
         insertCharToArray(text, c, cursor.getJ());
-        cursor.moveCursor(panel, new MoveCursorRightCommand(), true);
+        moveCursor(new MoveCursorRightCommand(), true);
     }
 
     private void removeCharFromArray(char[] arr, int index) {
@@ -80,13 +80,20 @@ public class TextEngine {
     public void deleteCharacter() {
         if (cursor.getJ() == 0) return;
         removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
-        cursor.moveCursor(panel, new MoveCursorLeftCommand(), true);
+        moveCursor(new MoveCursorLeftCommand(), true);
     }
 
     private int getYLinePos(int line) {
         int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;
         int textCursorDisplacement = EditorConfig.CURSOR_HEIGHT - EditorConfig.CURSOR_DISPLACEMENT;
         return EditorConfig.PADDING_UP + currLinePadding + textCursorDisplacement;
+    }
+    public int getLastCharPos(int lineIndex) {
+        int count = cursor.getJ();
+        while(text.get(lineIndex)[count] != '\0') {
+            count++;
+        }
+        return count;
     }
 
     public void breakLine(int column, int lineIndex) {
@@ -95,6 +102,11 @@ public class TextEngine {
         char[] secondPart = Arrays.copyOfRange(currLine, column, currLine.length);
         Arrays.fill(currLine, column, currLine.length, '\0');
         text.add(lineIndex + 1, secondPart);
+    }
+    public void concatenateWithPrevLine(int column, int lineIndex) {
+        // When we're pressing backspace on the first character we
+        // have to concatenate the current line with the previous line
+        // and delete the current line
     }
 
     public void paintText(Graphics g) {

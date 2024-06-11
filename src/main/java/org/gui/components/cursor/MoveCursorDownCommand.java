@@ -1,6 +1,5 @@
 package org.gui.components.cursor;
 
-import org.gui.components.EditorConfig;
 import org.gui.components.TextAreaPanel;
 
 public class MoveCursorDownCommand implements CursorCommand {
@@ -16,7 +15,8 @@ public class MoveCursorDownCommand implements CursorCommand {
         cursor.setJ(cursor.getJ() + offset);
 
         //Move the cursor on screen
-        cursor.setY(cursor.getY() + EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING);
-        cursor.setX(cursor.getX() + offset * EditorConfig.CURSOR_WIDTH);
+//        cursor.setY(cursor.getY() + EditorConfig.CURSOR_HEIGHT + EditorConfig.LINE_SPACING);
+//        cursor.setX(cursor.getX() + offset * EditorConfig.CURSOR_WIDTH);
+        cursor.updateCursorPhysicalPos();
     }
 }

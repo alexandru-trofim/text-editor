@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 public class CustomCursor {
 
@@ -49,16 +48,16 @@ public class CustomCursor {
         this.i = i;
     }
 
+    public void setJ(int j) {
+        this.j = j;
+    }
+
     public int getCursorWidth() {
         return cursorWidth;
     }
 
     public int getCursorHeight() {
         return cursorHeight;
-    }
-
-    public void setJ(int j) {
-        this.j = j;
     }
 
     public CustomCursor(int x, int y) {
@@ -70,42 +69,7 @@ public class CustomCursor {
         this.color = new Color(0, 0, 0, alpha);
     }
 
-    //TODO: This one shold be in the text engine
-    private int getLastCharPos(TextAreaPanel panel, int lineIndex) {
-        int count = j;
-        List<char[]> text = panel.getTextEngine().getText();
-        while(text.get(lineIndex)[count] != '\0') {
-            count++;
-        }
-        return count;
-    }
 
-    /**
-     * Finds on what character position on the line should we move
-     * When going from a line to another
-     * @param panel Current panel we're editing text
-     * @param currLine The current line index
-     * @param newLine The new line index
-     * @return Returns the column position on the new line
-     */
-    private int getNewLineColumnPos(TextAreaPanel panel, int currLine, int newLine) {
-        int currLinePos = j;
-        int newLinePos = 0;
-        List<char[]> text = panel.getTextEngine().getText();
-
-        while(text.get(newLine)[newLinePos] != '\0') {
-            newLinePos++;
-        }
-
-        // We put here - in front of the return because we want to go to the left
-        if (newLinePos >= currLinePos) return 0;
-        else return -(currLinePos - newLinePos);
-    }
-    public void moveCursor(TextAreaPanel panel, CursorCommand command, boolean editingText) {
-        panel.repaint(x, y, cursorWidth + 1, cursorHeight + 1);
-        command.execute(panel, editingText);
-        panel.repaint(x, y, cursorWidth + 1, cursorHeight + 1);
-    }
 
     public Timer enableCursorBlinking(TextAreaPanel panel) {
         return new Timer(80, new ActionListener() {
@@ -126,6 +90,18 @@ public class CustomCursor {
                 panel.repaint(x, y, cursorWidth, cursorHeight);
             }
         });
+    }
+
+    private int getYCursorPos(int line) {
+        int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;
+        return EditorConfig.PADDING_UP + currLinePadding;
+    }
+    public void updateCursorPhysicalPos() {
+        /* We have to calculate the x and y of the cursor
+        * based on the EditorConfig, i, j, and size of characters
+        */
+        y = getYCursorPos(i);
+        x = EditorConfig.PADDING_LEFT + cursorWidth * j;
     }
 
     public void paintCursor(Graphics g) {
