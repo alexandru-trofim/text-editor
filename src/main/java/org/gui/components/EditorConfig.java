@@ -8,8 +8,8 @@ public class EditorConfig {
     public static float FONT_SIZE = 16.0f;
     public static int PADDING_BOTTOM = 20;
     public static int CURSOR_BLINK_STEP = 40;
-    public static int CURSOR_WIDTH = 10;
-    public static int CURSOR_HEIGHT = 18;
+    public static int CURSOR_WIDTH = (int) Math.floor(10 * (FONT_SIZE / 16.0f));
+    public static int CURSOR_HEIGHT = (int) Math.floor(18 * (FONT_SIZE / 16.0f));
     //Help us to center the text in the middle of the letters
     // By default the letters are at the bottom of the cursor
     public static int CURSOR_DISPLACEMENT = 4;

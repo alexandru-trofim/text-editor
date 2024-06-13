@@ -78,7 +78,25 @@ public class TextEngine {
 
     }
     public void deleteCharacter() {
-        if (cursor.getJ() == 0) return;
+        if (cursor.getJ() == 0 && cursor.getI() == 0) {
+            return;
+        }
+        if (cursor.getJ() == 0 && cursor.getI() != 0) {
+            // Here we have to concatenate the current string
+            // with the previous string and to delete the current string after that
+            // Also I have to remember the lastCharPos of the previous line before
+            // concatenating it
+            int cursorNewJPos = getLastCharPos(cursor.getI() - 1);
+            System.out.println("cursorNewJpos: " + cursorNewJPos);
+            System.out.println("currentLine: " + cursor.getI());
+            System.out.println("newLine: " + (cursor.getI() - 1));
+            concatenateWithPrevLine(cursor.getI());
+            moveCursor(new MoveCursorToPosCommand(cursor.getI() - 1, cursorNewJPos), true);
+            System.out.println("After moving");
+            System.out.println("cursor new j " + cursor.getJ());
+            System.out.println("cursor new i " + cursor.getI());
+            return;
+        }
         removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
         moveCursor(new MoveCursorLeftCommand(), true);
     }
@@ -89,7 +107,7 @@ public class TextEngine {
         return EditorConfig.PADDING_UP + currLinePadding + textCursorDisplacement;
     }
     public int getLastCharPos(int lineIndex) {
-        int count = cursor.getJ();
+        int count = 0;
         while(text.get(lineIndex)[count] != '\0') {
             count++;
         }
@@ -103,10 +121,24 @@ public class TextEngine {
         Arrays.fill(currLine, column, currLine.length, '\0');
         text.add(lineIndex + 1, secondPart);
     }
-    public void concatenateWithPrevLine(int column, int lineIndex) {
+    public void concatenateWithPrevLine(int lineIndex) {
         // When we're pressing backspace on the first character we
         // have to concatenate the current line with the previous line
         // and delete the current line
+        char[] currLine = text.get(lineIndex);
+        char[] prevLine = text.get(lineIndex - 1);
+        char[] newLine = new char[currLine.length + prevLine.length];
+        int currLineLen = getLastCharPos(lineIndex);
+        int prevLineLen = getLastCharPos(lineIndex - 1);
+        //Concat the two lines
+        System.out.println("currLine length: " + currLineLen);
+        System.out.println("prevLine length: " + prevLineLen);
+        System.arraycopy(prevLine, 0, newLine, 0, prevLineLen);
+        System.arraycopy(currLine, 0, newLine, prevLineLen, currLineLen);
+        text.set(lineIndex - 1, newLine);
+        text.remove(lineIndex);
+        System.out.println("new line is " + Arrays.toString(text.get(lineIndex - 1)));
+
     }
 
     public void paintText(Graphics g) {

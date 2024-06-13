@@ -16,35 +16,41 @@ public class Main {
         JFrame f = new JFrame("Swing paint demo");
         TextAreaPanel panel = new TextAreaPanel();
         JMenuBar menuBar = new JMenuBar();
+
         JMenuItem saveItem, openItem;
         JMenu fileMenu = new JMenu("File");
+
+        JMenuItem increaseFontItem, decreaseFontItem;
+        JMenu editorMenu = new JMenu("Editor");
 
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(panel);
         f.pack();
         f.setVisible(true);
 
-
-        // Menu Item (Drop down menus)
+        /* Set up  the File Menu*/
         openItem = new JMenuItem("Open");
         saveItem = new JMenuItem("Save");
-
+        /* Action listeners*/
         saveItem.addActionListener(new SaveButtonListener(panel));
-
-        // Adding menu items to menu
+        /* Adding menu items to menu */
         fileMenu.add(saveItem);
         fileMenu.add(openItem);
 
-        // adding menu to menu bar
+        /* Set up the Editor Menu*/
+        increaseFontItem = new JMenuItem("Increase Font");
+        decreaseFontItem = new JMenuItem("Decrease Font");
+        /* Action listeners*/
+        /*Here*/
+        /* Adding menu items to menu*/
+        editorMenu.add(increaseFontItem);
+        editorMenu.add(decreaseFontItem);
+
+        /* Adding menus to menu bar*/
         menuBar.add(fileMenu);
+        menuBar.add(editorMenu);
 
-        // setting menubar at top of the window.
-
-        // if you create an object of JFrame in class then code to set JMenuBar to JFrame will be:
-        // jframe.setJMenuBar(menuBar);
-        // if class is extending JFrame then it will be like this:
         f.setJMenuBar(menuBar);
-
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::createAndShowGui);

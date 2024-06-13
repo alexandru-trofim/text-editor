@@ -5,6 +5,7 @@ import org.gui.listeners.TextEditorListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -43,6 +44,23 @@ public class TextAreaPanel extends JPanel {
             currentFont = Font.createFont(Font.TRUETYPE_FONT,
                     Objects.requireNonNull(stream)).deriveFont(EditorConfig.FONT_SIZE);
             setFont(currentFont);
+            //This if for scale
+            BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = image.getGraphics();
+            g.setFont(currentFont);
+
+            // Obtain FontMetrics
+            FontMetrics metrics = g.getFontMetrics();
+
+            // Calculate total height and individual character width
+            int textHeight = metrics.getAscent() + metrics.getDescent(); // Omit leading unless designing for text paragraphs
+            int charWidth = metrics.charWidth('H'); // Example character
+
+            // Output metrics
+            System.out.println("Text Height: " + textHeight + " pixels");
+            System.out.println("Width of 'H': " + charWidth + " pixels");
+            System.out.println("Width of cursor: " + EditorConfig.CURSOR_WIDTH);
+            System.out.println("Height of cursor: " + EditorConfig.CURSOR_HEIGHT);
 
         } catch (IOException | FontFormatException | NullPointerException e ) {
             e.printStackTrace();
@@ -60,8 +78,8 @@ public class TextAreaPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        textEngine.paintText(g);
         cursor.paintCursor(g);
+        textEngine.paintText(g);
     }
 }
 
