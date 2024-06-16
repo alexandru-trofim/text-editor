@@ -17,8 +17,8 @@ public class CustomCursor {
     private Color color;
     private int alpha = 255;
     private int increment = EditorConfig.CURSOR_BLINK_STEP;
-    private final int cursorWidth = EditorConfig.CURSOR_WIDTH; // Example: cursor width
-    private final int  cursorHeight = EditorConfig.CURSOR_HEIGHT; // Example: cursor height
+    private int cursorWidth = EditorConfig.CURSOR_WIDTH; // Example: cursor width
+    private int  cursorHeight = EditorConfig.CURSOR_HEIGHT; // Example: cursor height
 
     public int getX() {
         return x;
@@ -58,6 +58,14 @@ public class CustomCursor {
 
     public int getCursorHeight() {
         return cursorHeight;
+    }
+
+    public void setCursorWidth(int cursorWidth) {
+        this.cursorWidth = cursorWidth;
+    }
+
+    public void setCursorHeight(int cursorHeight) {
+        this.cursorHeight = cursorHeight;
     }
 
     public CustomCursor(int x, int y) {

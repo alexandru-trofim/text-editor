@@ -5,8 +5,10 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import org.gui.components.TextAreaPanel;
+import org.gui.listeners.ModifyFontListener;
 import org.gui.listeners.SaveButtonListener;
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
 
@@ -16,6 +18,8 @@ public class Main {
         JFrame f = new JFrame("Swing paint demo");
         TextAreaPanel panel = new TextAreaPanel();
         JMenuBar menuBar = new JMenuBar();
+        JScrollPane scrollPane = new JScrollPane(panel);
+
 
         JMenuItem saveItem, openItem;
         JMenu fileMenu = new JMenu("File");
@@ -23,10 +27,17 @@ public class Main {
         JMenuItem increaseFontItem, decreaseFontItem;
         JMenu editorMenu = new JMenu("Editor");
 
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(panel);
-        f.pack();
-        f.setVisible(true);
+
+        /* Set up the panel*/
+        panel.setBorder(null);
+
+        /* Set up the Scroll Pane*/
+//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        scrollPane.setBounds(0, 0, 100, 700);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
 
         /* Set up  the File Menu*/
         openItem = new JMenuItem("Open");
@@ -41,7 +52,8 @@ public class Main {
         increaseFontItem = new JMenuItem("Increase Font");
         decreaseFontItem = new JMenuItem("Decrease Font");
         /* Action listeners*/
-        /*Here*/
+        increaseFontItem.addActionListener(new ModifyFontListener(panel, "increase"));
+        decreaseFontItem.addActionListener(new ModifyFontListener(panel, "decrease"));
         /* Adding menu items to menu*/
         editorMenu.add(increaseFontItem);
         editorMenu.add(decreaseFontItem);
@@ -50,7 +62,13 @@ public class Main {
         menuBar.add(fileMenu);
         menuBar.add(editorMenu);
 
+
         f.setJMenuBar(menuBar);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        f.add(panel);
+        f.add(scrollPane);
+        f.pack();
+        f.setVisible(true);
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::createAndShowGui);

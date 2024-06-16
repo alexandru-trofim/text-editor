@@ -15,7 +15,8 @@ public class TextAreaPanel extends JPanel {
     private CustomCursor cursor;
     private Timer cursorBlinkTimer;
     private TextEngine textEngine;
-
+    private int preferredWidth = 500;  // Initial preferred width
+    private int preferredHeight = 10000; // Initial preferred h
     public CustomCursor getCustomCursor() {
         return cursor;
     }
@@ -37,10 +38,10 @@ public class TextAreaPanel extends JPanel {
         return textEngine;
     }
 
-    private void setCustomFont() {
+    public void setCustomFont() {
         try {
             InputStream stream = getClass()
-                    .getResourceAsStream("/SpaceMono-Regular.ttf");
+                    .getResourceAsStream("/UbuntuMono-R.ttf");
             currentFont = Font.createFont(Font.TRUETYPE_FONT,
                     Objects.requireNonNull(stream)).deriveFont(EditorConfig.FONT_SIZE);
             setFont(currentFont);
@@ -53,14 +54,9 @@ public class TextAreaPanel extends JPanel {
             FontMetrics metrics = g.getFontMetrics();
 
             // Calculate total height and individual character width
-            int textHeight = metrics.getAscent() + metrics.getDescent(); // Omit leading unless designing for text paragraphs
-            int charWidth = metrics.charWidth('H'); // Example character
-
-            // Output metrics
-            System.out.println("Text Height: " + textHeight + " pixels");
-            System.out.println("Width of 'H': " + charWidth + " pixels");
-            System.out.println("Width of cursor: " + EditorConfig.CURSOR_WIDTH);
-            System.out.println("Height of cursor: " + EditorConfig.CURSOR_HEIGHT);
+            int charWidth = metrics.charWidth('a'); // Example character
+            cursor.setCursorWidth(charWidth);
+            EditorConfig.CURSOR_WIDTH = charWidth;
 
         } catch (IOException | FontFormatException | NullPointerException e ) {
             e.printStackTrace();
@@ -69,10 +65,27 @@ public class TextAreaPanel extends JPanel {
         }
     }
 
+    public void updateContentSize(int newWidth, int newHeight) {
+        boolean sizeChanged = false;
+
+        if (newWidth > preferredWidth) {
+            preferredWidth = newWidth;
+            sizeChanged = true;
+        }
+        if (newHeight > preferredHeight) {
+            preferredHeight = newHeight;
+            sizeChanged = true;
+        }
+
+        if (sizeChanged) {
+            revalidate(); // Notify the JScrollPane of the change
+            repaint();    // Optionally repaint to reflect changes immediately
+        }
+    }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(250, 200);
+        return new Dimension(preferredWidth, preferredHeight);
     }
 
     @Override
@@ -80,6 +93,7 @@ public class TextAreaPanel extends JPanel {
         super.paintComponent(g);
         cursor.paintCursor(g);
         textEngine.paintText(g);
+//        System.out.println("width: " + getWidth() + " height: " + getHeight());
     }
 }
 

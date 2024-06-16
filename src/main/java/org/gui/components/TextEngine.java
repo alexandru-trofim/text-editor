@@ -87,21 +87,15 @@ public class TextEngine {
             // Also I have to remember the lastCharPos of the previous line before
             // concatenating it
             int cursorNewJPos = getLastCharPos(cursor.getI() - 1);
-            System.out.println("cursorNewJpos: " + cursorNewJPos);
-            System.out.println("currentLine: " + cursor.getI());
-            System.out.println("newLine: " + (cursor.getI() - 1));
             concatenateWithPrevLine(cursor.getI());
             moveCursor(new MoveCursorToPosCommand(cursor.getI() - 1, cursorNewJPos), true);
-            System.out.println("After moving");
-            System.out.println("cursor new j " + cursor.getJ());
-            System.out.println("cursor new i " + cursor.getI());
             return;
         }
         removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
         moveCursor(new MoveCursorLeftCommand(), true);
     }
 
-    private int getYLinePos(int line) {
+    public int getYLinePos(int line) {
         int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;
         int textCursorDisplacement = EditorConfig.CURSOR_HEIGHT - EditorConfig.CURSOR_DISPLACEMENT;
         return EditorConfig.PADDING_UP + currLinePadding + textCursorDisplacement;
@@ -131,14 +125,10 @@ public class TextEngine {
         int currLineLen = getLastCharPos(lineIndex);
         int prevLineLen = getLastCharPos(lineIndex - 1);
         //Concat the two lines
-        System.out.println("currLine length: " + currLineLen);
-        System.out.println("prevLine length: " + prevLineLen);
         System.arraycopy(prevLine, 0, newLine, 0, prevLineLen);
         System.arraycopy(currLine, 0, newLine, prevLineLen, currLineLen);
         text.set(lineIndex - 1, newLine);
         text.remove(lineIndex);
-        System.out.println("new line is " + Arrays.toString(text.get(lineIndex - 1)));
-
     }
 
     public void paintText(Graphics g) {
