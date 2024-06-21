@@ -1,14 +1,17 @@
 package org;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
 import org.gui.components.TextAreaPanel;
 import org.gui.listeners.ModifyFontListener;
 import org.gui.listeners.SaveButtonListener;
-import javax.swing.*;
-import java.awt.*;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
 
 public class Main {
 
@@ -30,10 +33,12 @@ public class Main {
 
         /* Set up the panel*/
         panel.setBorder(null);
+        panel.setScrollPane(scrollPane);
 
         /* Set up the Scroll Pane*/
 //        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setAutoscrolls(false);
 //        scrollPane.setBounds(0, 0, 100, 700);
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -65,10 +70,11 @@ public class Main {
 
         f.setJMenuBar(menuBar);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        f.add(panel);
         f.add(scrollPane);
         f.pack();
         f.setVisible(true);
+
+        panel.updatePanelSize();
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::createAndShowGui);

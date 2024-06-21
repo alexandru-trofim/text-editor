@@ -1,6 +1,6 @@
 package org.gui.components.cursor;
 
-public enum CursorDirection {
+public enum Direction {
     LEFT,
     RIGHT,
     UP,

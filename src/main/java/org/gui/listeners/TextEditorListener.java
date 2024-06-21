@@ -33,6 +33,7 @@ public class TextEditorListener extends KeyAdapter {
 
         if (keyMap.containsKey(keyCode)) {
             panel.getTextEngine().moveCursor(keyMap.get(keyCode), false);
+            keyEvent.consume();
         } else if (Character.isLetterOrDigit(keyCode) || keyCode == ' ') {
             panel.getTextEngine().printChar(character);
         } else if (keyCode == KeyEvent.VK_BACK_SPACE) {

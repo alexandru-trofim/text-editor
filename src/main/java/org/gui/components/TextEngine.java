@@ -29,6 +29,9 @@ public class TextEngine {
     public List<char[]> getText() {
         return text;
     }
+    public void setText(List<char[]> text) {
+        this.text = text;
+    }
 
     public void moveCursor(CursorCommand command, boolean editingText) {
 
@@ -115,6 +118,7 @@ public class TextEngine {
         Arrays.fill(currLine, column, currLine.length, '\0');
         text.add(lineIndex + 1, secondPart);
     }
+
     public void concatenateWithPrevLine(int lineIndex) {
         // When we're pressing backspace on the first character we
         // have to concatenate the current line with the previous line

@@ -6,8 +6,9 @@ public class EditorConfig {
     public static int PADDING_UP = 50;
     public static int LINE_SPACING = 25;
     public static float FONT_SIZE = 18.0f;
-    public static int PADDING_BOTTOM = 20;
+    public static int PADDING_BOTTOM = 40;
     public static int CURSOR_BLINK_STEP = 40;
+    public static int SCROLL_OFFSET = 15;
 //    public static int CURSOR_WIDTH = (int) Math.floor(10 * (FONT_SIZE / 16.0f));
     public static int CURSOR_WIDTH = 9;
     public static int CURSOR_HEIGHT = (int) Math.floor(18 * (FONT_SIZE / 16.0f));

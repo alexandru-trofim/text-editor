@@ -6,18 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="694d7513-4b34-4ef7-992c-267f3ef38d43" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/EditorConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/EditorConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/TextAreaPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/TextAreaPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/TextEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/TextEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/gui/components/cursor/CustomCursor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/gui/components/cursor/CustomCursor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/EditorConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/EditorConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/TextAreaPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/TextAreaPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/TextEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/TextEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/cursor/CustomCursor$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/cursor/CustomCursor$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/gui/components/cursor/CustomCursor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/gui/components/cursor/CustomCursor.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +132,7 @@
       <workItem from="1718037321375" duration="2869000" />
       <workItem from="1718128478151" duration="9320000" />
       <workItem from="1718298947988" duration="16653000" />
-      <workItem from="1718567161926" duration="335000" />
+      <workItem from="1718567161926" duration="1631000" />
     </task>
     <servers />
   </component>
@@ -157,7 +149,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/gui/components/TextEngine.java</url>
-          <line>128</line>
+          <line>122</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
