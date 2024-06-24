@@ -104,7 +104,7 @@ public class CustomCursor {
         int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;
         return EditorConfig.PADDING_UP + currLinePadding;
     }
-    public void updateCursorPhysicalPos() {
+    public synchronized void updateCursorPhysicalPos() {
         /* We have to calculate the x and y of the cursor
         * based on the EditorConfig, i, j, and size of characters
         */

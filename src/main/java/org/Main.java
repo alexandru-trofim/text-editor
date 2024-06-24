@@ -68,7 +68,7 @@ public class Main {
         menuBar.add(editorMenu);
 
 
-        f.setJMenuBar(menuBar);
+//        f.setJMenuBar(menuBar);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(scrollPane);
         f.pack();

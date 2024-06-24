@@ -46,7 +46,7 @@ public class TextEngine {
                 cursor.getCursorHeight() + 1);
     }
 
-    public void printChar(char c) {
+    public synchronized void printChar(char c) {
         insertCharToArray(text, c, cursor.getJ());
         moveCursor(new MoveCursorRightCommand(), true);
     }
@@ -64,9 +64,10 @@ public class TextEngine {
         return newArray;
     }
 
-    private void insertCharToArray(List<char[]> text, char character, int index) {
+    private synchronized void insertCharToArray(List<char[]> text, char character, int index) {
         char[] currLine = text.get(cursor.getI());
         int lastChar = currLine.length - 1;
+        
 
         if (currLine[lastChar] != '\0') {
             //double the array size
@@ -111,11 +112,20 @@ public class TextEngine {
         return count;
     }
 
-    public void breakLine(int column, int lineIndex) {
+    public synchronized void breakLine(int column, int lineIndex) {
        //We have to split the text on the given line before and after
         char[] currLine = text.get(lineIndex);
         char[] secondPart = Arrays.copyOfRange(currLine, column, currLine.length);
+
+        /* Erase the second part from the first part*/
         Arrays.fill(currLine, column, currLine.length, '\0');
+        
+        if (secondPart.length < 20) {
+            char[] paddedPart = new char[20];
+            System.arraycopy(secondPart, 0, paddedPart, 0, secondPart.length);
+            secondPart = paddedPart;
+        }
+        
         text.add(lineIndex + 1, secondPart);
     }
 
@@ -138,6 +148,7 @@ public class TextEngine {
     public void paintText(Graphics g) {
         for (int i = 0; i < text.size(); ++i) {
             char[] line = text.get(i);
+
             if (line[0] == '\0') {
                 continue;
             }

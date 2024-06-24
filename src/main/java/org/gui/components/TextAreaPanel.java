@@ -103,6 +103,10 @@ public class TextAreaPanel extends JPanel {
 		if (newHeight > preferredHeight) {
 			preferredHeight = newHeight;
 			sizeChanged = true;
+			//Maybe it's ok, maybe not
+			scrollPane.getVerticalScrollBar().setMaximum(preferredHeight);
+			System.out.println("height: " + scrollPane.getVerticalScrollBar().getMaximum());
+			
 		}
 
 		if (sizeChanged) {
@@ -113,13 +117,39 @@ public class TextAreaPanel extends JPanel {
 
 	public void scrollByOneLine(Direction direction, Rectangle viewRect) {
 	    JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+	    int offset = 0; 
 	    int lineHeight = EditorConfig.CURSOR_WIDTH + EditorConfig.LINE_SPACING; 
 
 	    int currLineYPos = textEngine.getYLinePos(cursor.getI());
-	    int offset = Math.abs((viewRect.y + viewRect.height) - currLineYPos); 
+
+	    if (direction == Direction.UP) {
+	    	offset = Math.abs((viewRect.y + EditorConfig.SCROLL_OFFSET) - currLineYPos);
+	    	offset += EditorConfig.CURSOR_HEIGHT;
+	    } else if (direction == Direction.DOWN) {
+	    	offset = Math.abs((viewRect.y + viewRect.height) - currLineYPos);
+	    	offset += EditorConfig.SCROLL_OFFSET;
+	    } else if (direction == Direction.NEW_LINE) {
+	    	System.out.println("Viewport end y " + (viewRect.y + viewRect.height));
+	    	offset = Math.abs((viewRect.y + viewRect.height) - currLineYPos);
+	    	System.out.println("offset 1: " + offset);
+	    	offset += EditorConfig.PADDING_BOTTOM;
+	    	System.out.println("offset 2: " + offset);
+	    }
+
 
 	    offset = direction == Direction.UP ? - offset : offset;
-	    verticalScrollBar.setValue(verticalScrollBar.getValue() + offset + EditorConfig.SCROLL_OFFSET); // Move the scrollbar down by one line
+		System.out.println("offset 3: " + offset);
+		System.out.println("scrollBar value1: " + verticalScrollBar.getValue());
+	     System.out.println("Updated Scroll Maximum 1: " + scrollPane.getVerticalScrollBar().getMaximum());
+	    verticalScrollBar.setValue(verticalScrollBar.getValue() + offset); // Move the scrollbar down by one line
+	      System.out.println("Updated Scroll Maximum 2: " + scrollPane.getVerticalScrollBar().getMaximum());
+	      System.out.println("get preffered height " + getPreferredSize().height);
+
+		System.out.println("scrollBar value2 " + verticalScrollBar.getValue());
+
+        JScrollPane scrollPane = getScrollPane();
+        Rectangle viewRect2 = scrollPane.getViewport().getViewRect();
+	    	System.out.println("Viewport end y " + (viewRect2.y + viewRect2.height));
 	}
 
 	@Override
@@ -134,6 +164,14 @@ public class TextAreaPanel extends JPanel {
 		textEngine.paintText(g);
 	}
 }
+
+
+
+
+
+
+
+
 
 
 

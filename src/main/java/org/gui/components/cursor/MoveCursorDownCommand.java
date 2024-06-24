@@ -2,17 +2,18 @@ package org.gui.components.cursor;
 
 import java.awt.Rectangle;
 
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.gui.components.EditorConfig;
 import org.gui.components.TextAreaPanel;
+import org.gui.components.TextEngine;
 
 public class MoveCursorDownCommand implements CursorCommand {
     @Override
     public void execute(TextAreaPanel panel, boolean editingText) {
         CustomCursor cursor = panel.getCustomCursor();
-        if (panel.getTextEngine().getText().size() - 1 == cursor.getI()) return;
+        TextEngine textEngine = panel.getTextEngine();
+        if (textEngine.getText().size() - 1 == cursor.getI()) return;
 
         int offset = CursorCommand.getNewLineColumnPos(panel,cursor.getI() + 1);
 
@@ -27,10 +28,10 @@ public class MoveCursorDownCommand implements CursorCommand {
         JScrollPane scrollPane = panel.getScrollPane();
         Rectangle viewRect = scrollPane.getViewport().getViewRect();
 
-        /* TODO: Here we will simplify like this:
-         * if (newLinePosY is outside of viewRect) then scroll */
-        if (cursor.getY() + EditorConfig.CURSOR_HEIGHT > viewRect.y + viewRect.height - EditorConfig.CURSOR_HEIGHT) {
+	    int currLineYPos = textEngine.getYLinePos(cursor.getI());
+        if (currLineYPos + EditorConfig.SCROLL_OFFSET > viewRect.y + viewRect.height) {
             panel.scrollByOneLine(Direction.DOWN, viewRect);
         }
+
     }
 }
