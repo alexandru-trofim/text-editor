@@ -20,6 +20,7 @@ public class TreeSitterTest {
 	
 	public static void main(String args[]) {
 		
+		
 		String jsonSource = "[1, null]";
 		TSParser parser = new TSParser();
 		TSLanguage json = new TreeSitterJson();
