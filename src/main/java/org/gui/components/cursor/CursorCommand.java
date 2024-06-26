@@ -17,13 +17,16 @@ public interface CursorCommand {
 	 * @return returns the offset(positive or negative) we have to move our cursor
 	 *         when going to a new line.
 	 */
-	public static int getNewLineColumnPos(TextAreaPanel panel, int newLine) {
+	public static int getNewLineColumnPos(TextAreaPanel panel, int newLineIndex) {
 		CustomCursor cursor = panel.getCustomCursor();
 		int currLinePos = cursor.getJ();
 		int newLinePos = 0;
 		List<char[]> text = panel.getTextEngine().getText();
+		
+		char[] newLine = text.get(newLineIndex);
 
-		while (text.get(newLine)[newLinePos] != '\0') {
+		while (newLinePos++ == newLine.length &&
+								newLine[newLinePos] != '\0') {
 			newLinePos++;
 		}
 		// We put here - in front of the return because we want to go to the left

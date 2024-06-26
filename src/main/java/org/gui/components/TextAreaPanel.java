@@ -93,29 +93,29 @@ public class TextAreaPanel extends JPanel {
 		}
 	}
 
-	public void updateContentSize(int newWidth, int newHeight) {
-		boolean sizeChanged = false;
-
-		if (newWidth > preferredWidth) {
-			preferredWidth = newWidth;
-			sizeChanged = true;
-		}
-		if (newHeight > preferredHeight) {
-			preferredHeight = newHeight;
-			sizeChanged = true;
-			//Maybe it's ok, maybe not
-			scrollPane.getVerticalScrollBar().setMaximum(preferredHeight);
-			System.out.println("height: " + scrollPane.getVerticalScrollBar().getMaximum());
-			
-		}
-
-		if (sizeChanged) {
-			revalidate(); // Notify the JScrollPane of the change
-//            repaint();    // Optionally repaint to reflect changes immediately
-		}
+	/**
+	 * Sets the preferred height of the content area inside a JScrollPane. This method updates the maximum allowable
+	 * scrollable height to the specified new height. It adjusts the JScrollPane to accommodate the new height setting.
+	 *
+	 * @param newHeight The new height in pixels to be set as the preferred height of the content. This value 
+	 *                  should reflect the total height of the content that needs to be displayed within the 
+	 *                  JScrollPane, influencing the range of the vertical scrollbar.
+	 */
+	public void setContentHeight(int newHeight) {
+		preferredHeight = newHeight;
+		scrollPane.getVerticalScrollBar().setMaximum(preferredHeight);
+		/* Notify the JScrollPane of the change */
+		revalidate(); 
 	}
 
-	public void scrollByOneLine(Direction direction, Rectangle viewRect) {
+	/**
+	 * Scrolls the editor vertically by one line. This method adjusts the viewport's content based on the cursor's movement
+	 * via arrow keys or when entering a new line at the end of the document.
+	 *
+	 * @param direction The direction to scroll the editor, either UP, DOWN, or to a NEW_LINE at the end of the document.
+	 * @param viewRect The current visible area of the viewport, used to calculate the necessary scroll amount.
+	 *                 This rectangle should contain the current x, y coordinates and size of the viewport.
+	 */	public void scrollByOneLine(Direction direction, Rectangle viewRect) {
 	    JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
 	    int offset = 0; 
 	    int lineHeight = EditorConfig.CURSOR_WIDTH + EditorConfig.LINE_SPACING; 
@@ -129,27 +129,12 @@ public class TextAreaPanel extends JPanel {
 	    	offset = Math.abs((viewRect.y + viewRect.height) - currLineYPos);
 	    	offset += EditorConfig.SCROLL_OFFSET;
 	    } else if (direction == Direction.NEW_LINE) {
-	    	System.out.println("Viewport end y " + (viewRect.y + viewRect.height));
 	    	offset = Math.abs((viewRect.y + viewRect.height) - currLineYPos);
-	    	System.out.println("offset 1: " + offset);
 	    	offset += EditorConfig.PADDING_BOTTOM;
-	    	System.out.println("offset 2: " + offset);
 	    }
 
-
 	    offset = direction == Direction.UP ? - offset : offset;
-		System.out.println("offset 3: " + offset);
-		System.out.println("scrollBar value1: " + verticalScrollBar.getValue());
-	     System.out.println("Updated Scroll Maximum 1: " + scrollPane.getVerticalScrollBar().getMaximum());
 	    verticalScrollBar.setValue(verticalScrollBar.getValue() + offset); // Move the scrollbar down by one line
-	      System.out.println("Updated Scroll Maximum 2: " + scrollPane.getVerticalScrollBar().getMaximum());
-	      System.out.println("get preffered height " + getPreferredSize().height);
-
-		System.out.println("scrollBar value2 " + verticalScrollBar.getValue());
-
-        JScrollPane scrollPane = getScrollPane();
-        Rectangle viewRect2 = scrollPane.getViewport().getViewRect();
-	    	System.out.println("Viewport end y " + (viewRect2.y + viewRect2.height));
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package org.gui.components.cursor;
 import java.awt.Rectangle;
 
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import org.gui.components.EditorConfig;
 import org.gui.components.TextAreaPanel;
@@ -23,7 +24,7 @@ public class MoveCursorUpCommand implements CursorCommand{
         /* Move the cursor on screen */
         cursor.updateCursorPhysicalPos();
 
-        /* Scroll Panel if reaching the bottom with the cursor*/
+        /* Scroll Panel if reaching the top of the viewport with the cursor*/
         JScrollPane scrollPane = panel.getScrollPane();
         Rectangle viewRect = scrollPane.getViewport().getViewRect();
 	    int currLineYPos = textEngine.getYLinePos(cursor.getI());

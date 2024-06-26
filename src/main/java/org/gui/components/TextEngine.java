@@ -1,11 +1,20 @@
 package org.gui.components;
 
-import org.gui.components.cursor.*;
-
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
+import org.gui.components.cursor.CursorCommand;
+import org.gui.components.cursor.CustomCursor;
+import org.gui.components.cursor.Direction;
+import org.gui.components.cursor.MoveCursorLeftCommand;
+import org.gui.components.cursor.MoveCursorRightCommand;
+import org.gui.components.cursor.MoveCursorToPosCommand;
 //import java.util.List;
 
 public class TextEngine {
@@ -81,23 +90,47 @@ public class TextEngine {
         currLine[index] = character;
 
     }
-    public void deleteCharacter() {
-        if (cursor.getJ() == 0 && cursor.getI() == 0) {
-            return;
-        }
-        if (cursor.getJ() == 0 && cursor.getI() != 0) {
-            // Here we have to concatenate the current string
-            // with the previous string and to delete the current string after that
-            // Also I have to remember the lastCharPos of the previous line before
-            // concatenating it
-            int cursorNewJPos = getLastCharPos(cursor.getI() - 1);
-            concatenateWithPrevLine(cursor.getI());
-            moveCursor(new MoveCursorToPosCommand(cursor.getI() - 1, cursorNewJPos), true);
-            return;
-        }
-        removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
-        moveCursor(new MoveCursorLeftCommand(), true);
-    }
+    
+	/**
+	 * Deletes the character positioned immediately left of the cursor in the text editor. 
+	 * This method handles different scenarios based on the cursor's position:
+     * <p>
+	 * 1. If the cursor is at the start of the document, no action is performed.
+     * <p>
+	 * 2. If the cursor is at the start of a line but not the first line, the current line is merged
+	 *    with the end of the previous line. The cursor is then moved to the end of what was the previous line.
+     * <p>
+	 * 3. If the cursor is elsewhere within a line, the character to the left of the cursor is removed,
+	 *    and the cursor is moved left by one position.
+	 */ 
+	public void deleteCharacter() {
+		if (cursor.getJ() == 0 && cursor.getI() == 0) {
+			return;
+		}
+		if (cursor.getJ() == 0 && cursor.getI() != 0) {
+			int cursorNewJPos = getLastCharPos(cursor.getI() - 1);
+
+			concatenateWithPrevLine(cursor.getI());
+			moveCursor(new MoveCursorToPosCommand(cursor.getI() - 1, cursorNewJPos), true);
+
+			/* Update the Content height after a line is removed*/
+			int lastLineYPos = getYLinePos(text.size() - 1);
+			panel.setContentHeight(lastLineYPos + EditorConfig.PADDING_BOTTOM);
+
+			/* Scroll Panel if reaching the top of the viewport with the cursor*/
+			JScrollPane scrollPane = panel.getScrollPane();
+			Rectangle viewRect = scrollPane.getViewport().getViewRect();
+			int currLineYPos = getYLinePos(cursor.getI());
+
+			if (currLineYPos < viewRect.y + EditorConfig.SCROLL_OFFSET) {
+				panel.scrollByOneLine(Direction.UP, viewRect);
+			}
+
+			return;
+		}
+		removeCharFromArray(text.get(cursor.getI()), cursor.getJ() - 1);
+		moveCursor(new MoveCursorLeftCommand(), true);
+	}
 
     public int getYLinePos(int line) {
         int currLinePadding = (EditorConfig.LINE_SPACING + EditorConfig.CURSOR_HEIGHT) * line;

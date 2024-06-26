@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 
 import org.gui.components.TextAreaPanel;
 import org.gui.listeners.ModifyFontListener;
+import org.gui.listeners.OpenFileButtonListener;
 import org.gui.listeners.SaveButtonListener;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
@@ -49,6 +50,7 @@ public class Main {
         saveItem = new JMenuItem("Save");
         /* Action listeners*/
         saveItem.addActionListener(new SaveButtonListener(panel));
+        openItem.addActionListener(new OpenFileButtonListener(panel, f));
         /* Adding menu items to menu */
         fileMenu.add(saveItem);
         fileMenu.add(openItem);
@@ -68,7 +70,7 @@ public class Main {
         menuBar.add(editorMenu);
 
 
-//        f.setJMenuBar(menuBar);
+        f.setJMenuBar(menuBar);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(scrollPane);
         f.pack();

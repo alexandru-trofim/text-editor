@@ -19,7 +19,7 @@ public class CursorNewLineCommand implements CursorCommand {
          * Get the last line position */
         int lastLineYPos = textEngine.getYLinePos(textEngine.getText().size() - 1);
         /* TODO: Implement and for width */
-        panel.updateContentSize(600, lastLineYPos + EditorConfig.PADDING_BOTTOM);
+        panel.setContentHeight(lastLineYPos + EditorConfig.PADDING_BOTTOM);
 
         /* Move the cursor logically */
         cursor.setJ(0);
@@ -27,47 +27,15 @@ public class CursorNewLineCommand implements CursorCommand {
         /* Move the cursor on screen */
         cursor.updateCursorPhysicalPos();
 
-        /* Scroll Panel if reaching the bottom with the cursor*/
+        /* Scroll Panel if reaching the bottom with the cursor */
         JScrollPane scrollPane = panel.getScrollPane();
         Rectangle viewRect = scrollPane.getViewport().getViewRect();
 
 	    int currLineYPos = textEngine.getYLinePos(cursor.getI());
         if (currLineYPos + EditorConfig.SCROLL_OFFSET > viewRect.y + viewRect.height) {
-            System.out.println("Am intrat la scroll New Line");
-            System.out.println("currlineY + scrollOffset " + (currLineYPos + EditorConfig.SCROLL_OFFSET) + " viewRectY + height " + (viewRect.y + viewRect.height));
             panel.scrollByOneLine(Direction.NEW_LINE, viewRect);
         }
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
